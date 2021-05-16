@@ -8,9 +8,10 @@ graphs = Blueprint('graphs', __name__)
 
 
 @graphs.route('/')
-@token_required
+#@token_required
 @cross_origin()
-def graphs_home(current_user):
+#def graphs_home(current_user):
+def graphs_home():
     graph = GraphVisualization(config.NEO4J_URL, config.NEO4J_USERNAME, config.NEO4J_PASSWORD)
     data = graph.call_d3()
     graph.close()
@@ -19,9 +20,10 @@ def graphs_home(current_user):
 
 
 @graphs.route('/shortest-path')
-@token_required
+#@token_required
 @cross_origin()
-def graphs_shortest_path(current_user):
+#def graphs_shortest_path(current_user):
+def graphs_shortest_path():
     source_email = request.args.get('source_email')
     target_email = request.args.get('target_email')
     graph = GraphVisualization(config.NEO4J_URL, config.NEO4J_USERNAME, config.NEO4J_PASSWORD)
@@ -41,7 +43,7 @@ def graphs_label_propagation(current_user):
 
 
 @graphs.route('/centrality')
-@token_required
+#@token_required
 @cross_origin()
 def graphs_centrality(current_user):
     graph = GraphVisualization(config.NEO4J_URL, config.NEO4J_USERNAME, config.NEO4J_PASSWORD)
