@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  # backend:
+  #   build: .
+  #   depends_on:
+  #     - database
+  #   image: backend
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - 5000:5000
+  database:
+    container_name: postgres
+    image: postgres:latest
+    env_file: database.conf
+    networks: 
+      - default
+    ports:
+      - 5432:5432  
+    volumes:
+      - db_volume:/var/lib/postgresql
+  # graph_database:
+  #   container_name: neo4j
+  #   image: neo4j:latest
+  #   ports: 
+  #     - "7474:7474"
+  #     - "7687:7687"
+    
+
+volumes:
+  db_volume:
