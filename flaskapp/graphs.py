@@ -1,5 +1,6 @@
 from flaskapp.auth import token_required
 from flask import Blueprint, json, request, jsonify, make_response
+from flask_cors import cross_origin
 from .graphs_utils import GraphVisualization
 from . import config
 
@@ -8,6 +9,7 @@ graphs = Blueprint('graphs', __name__)
 
 @graphs.route('/')
 @token_required
+@cross_origin()
 def graphs_home(current_user):
     graph = GraphVisualization(config.NEO4J_URL, config.NEO4J_USERNAME, config.NEO4J_PASSWORD)
     data = graph.call_d3()
@@ -18,6 +20,7 @@ def graphs_home(current_user):
 
 @graphs.route('/shortest-path')
 @token_required
+@cross_origin()
 def graphs_shortest_path(current_user):
     source_email = request.args.get('source_email')
     target_email = request.args.get('target_email')
@@ -29,6 +32,7 @@ def graphs_shortest_path(current_user):
 
 @graphs.route('/label-propagation')
 @token_required
+@cross_origin()
 def graphs_label_propagation(current_user):
     graph = GraphVisualization(config.NEO4J_URL, config.NEO4J_USERNAME, config.NEO4J_PASSWORD)
     data = graph.call_label_propagation()
@@ -38,6 +42,7 @@ def graphs_label_propagation(current_user):
 
 @graphs.route('/centrality')
 @token_required
+@cross_origin()
 def graphs_centrality(current_user):
     graph = GraphVisualization(config.NEO4J_URL, config.NEO4J_USERNAME, config.NEO4J_PASSWORD)
     data = graph.call_centrality()

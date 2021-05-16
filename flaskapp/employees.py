@@ -3,6 +3,7 @@ import csv
 
 from .auth import token_required
 from flask import Blueprint, request
+from flask_cors import cross_origin
 from .database.models.enron import Employee, Recipient, Message
 from .database.models import db
 #from datetime import datetime
@@ -11,6 +12,7 @@ employees = Blueprint('employees', __name__)
 
 @employees.route('/allemployees', methods=['GET'])
 @token_required
+@cross_origin()
 def get_all_employees(current_user):
     employees = Employee.query.all()
     # messages = Message.query.all()
@@ -39,6 +41,7 @@ def get_all_employees(current_user):
 
 @employees.route('/get_employee_info', methods=['POST'])
 @token_required
+@cross_origin()
 def get_employee_info(current_user):
     print("the current user: ", current_user)
     eid = request.get_json()['data']['eid']
@@ -112,6 +115,7 @@ def get_employee_info(current_user):
 
 
 @employees.route('/fillrelationships', methods=['GET'])
+@cross_origin()
 def fill_recipient_relationships():
     recipients = Recipient.query.all()
 

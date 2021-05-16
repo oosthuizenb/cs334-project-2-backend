@@ -1,4 +1,5 @@
 from flask import Blueprint, json, request, jsonify, make_response
+from flask_cors import cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from .database.models.user import User, WhiteListToken
@@ -41,6 +42,7 @@ def token_required(func):
 
 
 @auth.route('/register', methods=['POST'])
+@cross_origin()
 def register():
     # get post data
     data = request.get_json()
@@ -92,6 +94,7 @@ def register():
 
 
 @auth.route('/login', methods=['POST'])
+@cross_origin()
 def login():
     # auth data
     auth = request.get_json()
@@ -128,6 +131,7 @@ def login():
 
 @auth.route('/logout', methods=['POST'])
 @token_required
+@cross_origin()
 def logout(current_user):
     auth_token = request.headers['x-access-token']
     if auth_token:
@@ -161,6 +165,7 @@ def logout(current_user):
 
 @auth.route('/secure', methods=['GET'])
 @token_required
+@cross_origin()
 def secure(current_user):
     return jsonify({"message": "Success"})
 

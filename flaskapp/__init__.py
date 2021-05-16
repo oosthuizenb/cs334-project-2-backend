@@ -6,9 +6,9 @@ from .database.models import db
 
 app = Flask(__name__)
 
-
 def create_app():
-    CORS(app, resources={r"/*": {"origins": "*"}})
+    cors = CORS(app) #CORS(app, resources={r"/*": {"origins": "*"}})
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.config['SECRET_KEY'] = 'SUPERSECRET'
     app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_CONNECTION_URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
